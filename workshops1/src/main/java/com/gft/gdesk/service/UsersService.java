@@ -18,6 +18,13 @@ public class UsersService {
         return users;
     }
 
+    public Users getUsersById(int id){
+        if(id > users.size()){
+            return null;
+        }
+        return users.get(id);
+    }
+
     @PostConstruct
     public void setInitialUsers() {
         this.users.addAll(Arrays.asList(
