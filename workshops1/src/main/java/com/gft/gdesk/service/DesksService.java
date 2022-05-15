@@ -17,6 +17,13 @@ public class DesksService {
     public List<Desks> getAllDesks() {
         return desks;
     }
+    public Desks getDesksById(int id) {
+        if (id > desks.size()) {
+            return null;
+        }
+        return desks.get(id);
+    }
+
 
     @PostConstruct
     public void setInitialUsers() {
