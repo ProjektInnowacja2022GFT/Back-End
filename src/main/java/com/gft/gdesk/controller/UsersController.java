@@ -26,6 +26,11 @@ public class UsersController {
         this.userService = userService;
     }
 
+    @PostMapping("/register")
+    public String registerUser(@RequestBody Users toRegister) {
+        return userService.registerUser(toRegister);
+    }
+
     @GetMapping("/getUsers")
     public List<Users> getUsers() {
         return userService.getAllUsers();
