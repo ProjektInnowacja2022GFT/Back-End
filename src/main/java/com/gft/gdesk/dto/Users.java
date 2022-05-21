@@ -15,6 +15,6 @@ public class Users {
     private String company;
     private String email;
     private String password;
-    private String role = "USER";
-    private String status = "WAIT_FOR_APPROVAL";
+    private String role;
+    private String status;
 }
