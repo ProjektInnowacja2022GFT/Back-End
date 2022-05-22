@@ -23,6 +23,15 @@ public class UsersService {
         return users;
     }
 
+    public List<Users> getWaitForApprovalUsers() {
+        List<Users> waitForApprovalUsers=new ArrayList<>();
+        for(int i=0; i<users.size(); i++) {
+            if(users.get(i).getStatus().equals("WAIT_FOR_APPROVAL"))
+                waitForApprovalUsers.add(users.get(i));
+        }
+        return waitForApprovalUsers;
+    }
+
     public Users getUsersById(int id) {
         if (id > users.size()) {
             return null;

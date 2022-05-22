@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api/v1/users")
@@ -35,4 +36,7 @@ public class UsersController {
     public List<Users> getUsers() {
         return userService.getAllUsers();
     }
+
+    @GetMapping("/getWaitForApprovalUsers")
+    public List<Users> getWaitForApprovalUsers() { return userService.getWaitForApprovalUsers(); }
 }
