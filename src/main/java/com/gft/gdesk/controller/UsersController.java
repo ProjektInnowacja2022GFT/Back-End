@@ -3,9 +3,7 @@ package com.gft.gdesk.controller;
 
 import com.gft.gdesk.dto.Users;
 import com.gft.gdesk.service.UsersService;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,4 +28,10 @@ public class UsersController {
     public List<Users> getUsers() {
         return userService.getAllUsers();
     }
+
+    @PostMapping("/login")
+    public Users login(@RequestBody Users toLogin){
+        return userService.loginService.login(toLogin);
+    }
+
 }

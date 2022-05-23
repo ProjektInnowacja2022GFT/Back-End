@@ -1,8 +1,8 @@
 package com.gft.gdesk.service;
 
 
-import com.gft.gdesk.dto.Book;
 import com.gft.gdesk.dto.Users;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UsersService {
-    private List<Users> users = new ArrayList<>();
-
+    private List<Users> users;
+    public LoginService loginService;
     public List<Users> getAllUsers() {
         return users;
     }
@@ -60,4 +61,6 @@ public class UsersService {
                         build()
         ));
     }
+
+
 }
