@@ -1,8 +1,7 @@
 package com.gft.gdesk.controller;
 
-import com.gft.gdesk.dto.Reservations;
-import com.gft.gdesk.service.DesksService;
-import com.gft.gdesk.service.ReservationsService;
+import com.gft.gdesk.dto.Reservation;
+import com.gft.gdesk.service.ReservationService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +15,16 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ReservationsController {
+public class ReservationController {
 
-    private ReservationsService reservationsService;
+    private ReservationService reservationsService;
 
-    public ReservationsController(ReservationsService reservationsService) {
+    public ReservationController(ReservationService reservationsService) {
         this.reservationsService = reservationsService;
     }
 
     @GetMapping("/getReservations")
-    public List<Reservations> getReservations() {
+    public List<Reservation> getReservations() {
         return reservationsService.getAllReservations();
     }
 }
