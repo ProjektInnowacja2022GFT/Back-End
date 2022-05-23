@@ -15,6 +15,6 @@ public class Users {
     private String company;
     private String email;
     private String password;
-    private String role;
-    private String status;
+    private String role;   //todo create role as enum
+    private String status; //todo create status as  enum
 }

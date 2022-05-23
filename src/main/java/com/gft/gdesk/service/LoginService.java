@@ -13,11 +13,12 @@ import javax.naming.AuthenticationException;
 @Service
 @AllArgsConstructor
 public class LoginService {
-    private final UsersRepository userRepository;
-
     private final static String USER_DOSENT_EXISTS_MSG = "Incorrect email or password";
     private final static String USER_PENDING_MSG = "Your account is still pending approval";
     private final static String USER_REJECTED_MSG = "Your account has been rejected";
+    //todo uncomment after integration with database
+    //private final UsersRepository userRepository;
+
 
     public Users login(Users toLogin) {
         try {
@@ -55,9 +56,36 @@ public class LoginService {
     }
 
     private Users loadUserByEmail(String email) throws UserNotFoundException {
-        return userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(USER_DOSENT_EXISTS_MSG));
+        if (email.equals("testMail@a.pl"))
+            return Users.builder().
+                    id(0L).
+                    name("Jan").
+                    surname("Kowalski").
+                    company("GFT").
+                    email("jan.kowalski@gmail.com").
+                    password("haslo123").
+                    role("USER").
+                    status("APPROVED").
+                    build();
+        else if(email.equals("abc@a.pl")){
+            return Users.builder().
+                    id(0L).
+                    name("Mirek").
+                    surname("Karas").
+                    company("ESP").
+                    email("abc@a.pl").
+                    password("abcd").
+                    role("USER").
+                    status("BLOCKED").
+                    build();
+        }
+        else
+            throw new UserNotFoundException(USER_DOSENT_EXISTS_MSG);
+
+        //todo uncomment && remove static content after integration with database
+//        return userRepository
+//                .findByEmail(email)
+//                .orElseThrow(() -> new UserNotFoundException(USER_DOSENT_EXISTS_MSG));
     }
 
     private void validatePassword(Users user, String password) throws UserNotFoundException {
