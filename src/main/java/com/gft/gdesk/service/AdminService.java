@@ -17,9 +17,9 @@ public class AdminService
         this.userRepository = userRepository;
     }
 
-    public void acceptNewUser(String status)
+    public void acceptNewUser(Long Id)
     {
-        Optional<Users> user = Optional.ofNullable(userRepository.findByStatus(status));
+        Optional<Users> user = Optional.ofNullable(userRepository.findAllById(Id));
 
         if(!user.isPresent())
         {

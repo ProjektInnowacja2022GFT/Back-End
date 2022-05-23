@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<Users, Long>
 {
     Users findByStatus(String status);
+    Users findAllById(Long Id);
 }
