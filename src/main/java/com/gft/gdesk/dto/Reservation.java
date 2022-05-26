@@ -14,6 +14,6 @@ public class Reservation {
     private long id;
     private UserModel user;
     private Desk desk;
-    private LocalDate reservaretionsDateStart;
+    private LocalDate reservationDateStart;
     private LocalDate reservationsDateEnd;
 }
