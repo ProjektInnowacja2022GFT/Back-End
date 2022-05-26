@@ -13,8 +13,8 @@ import javax.naming.AuthenticationException;
 @AllArgsConstructor
 public class LoginService {
     private static final String USER_NOT_EXISTS_MSG = "Incorrect email or password";
-    private static final String USER_STATUS_PENDING_MSG = "Your account is still pending approval";
-    private static final String USER_STATUS_BLOCKED_MSG = "Your account has been rejected";
+    private static final String USER_PENDING_MSG = "Your account is still pending approval";
+    private static final String USER_BLOCKED_MSG = "Your account has been rejected";
     public static final String USER_STATUS_PENDING = "WAIT_FOR_APPROVAL";
     public static final String USER_STATUS_BLOCKED = "BLOCKED";
 
@@ -51,9 +51,9 @@ public class LoginService {
     private void authenticateUser(User user) throws AuthenticationException {
         switch (user.getStatus()) {
             case USER_STATUS_PENDING:
-                throw new AuthenticationException(USER_STATUS_PENDING_MSG);
+                throw new AuthenticationException(USER_PENDING_MSG);
             case USER_STATUS_BLOCKED:
-                throw new AuthenticationException(USER_STATUS_BLOCKED_MSG);
+                throw new AuthenticationException(USER_BLOCKED_MSG);
         }
     }
 
