@@ -2,7 +2,6 @@ package com.gft.gdesk.service;
 
 import com.gft.gdesk.dto.Users;
 import com.gft.gdesk.exception.loginExceptions.UserNotFoundException;
-import com.gft.gdesk.repository.UsersRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,9 +12,11 @@ import javax.naming.AuthenticationException;
 @Service
 @AllArgsConstructor
 public class LoginService {
-    private final static String USER_DOSENT_EXISTS_MSG = "Incorrect email or password";
-    private final static String USER_PENDING_MSG = "Your account is still pending approval";
-    private final static String USER_REJECTED_MSG = "Your account has been rejected";
+    private static final String USER_DOSENT_EXISTS_MSG = "Incorrect email or password";
+    private static final String USER_STATUS_PENDING_MSG = "Your account is still pending approval";
+    private static final String USER_STATUS_BLOCKED_MSG = "Your account has been rejected";
+    public static final String USER_STATUS_PENDING = "WAIT_FOR_APPROVAL";
+    public static final String USER_STATUS_BLOCKED = "BLOCKED";
     //todo uncomment after integration with database
     //private final UsersRepository userRepository;
 
@@ -48,10 +49,10 @@ public class LoginService {
 
     private void authenticateUser(Users user) throws AuthenticationException {
         switch (user.getStatus()) {
-            case "WAIT_FOR_APPROVAL":
-                throw new AuthenticationException(USER_PENDING_MSG);
-            case "BLOCKED":
-                throw new AuthenticationException(USER_REJECTED_MSG);
+            case USER_STATUS_PENDING:
+                throw new AuthenticationException(USER_STATUS_PENDING_MSG);
+            case USER_STATUS_BLOCKED:
+                throw new AuthenticationException(USER_STATUS_BLOCKED_MSG);
         }
     }
 
@@ -67,7 +68,7 @@ public class LoginService {
                     role("USER").
                     status("APPROVED").
                     build();
-        else if(email.equals("abc@a.pl")){
+        else if (email.equals("abc@a.pl")) {
             return Users.builder().
                     id(0L).
                     name("Mirek").
@@ -78,8 +79,7 @@ public class LoginService {
                     role("USER").
                     status("BLOCKED").
                     build();
-        }
-        else
+        } else
             throw new UserNotFoundException(USER_DOSENT_EXISTS_MSG);
 
         //todo uncomment && remove static content after integration with database
