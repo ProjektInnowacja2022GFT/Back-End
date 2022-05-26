@@ -12,11 +12,12 @@ import java.util.List;
 @Service
 public class DeskService {
 
-    private List<Desk> desks = new ArrayList<>();
+    private final List<Desk> desks = new ArrayList<>();
 
     public List<Desk> getAllDesks() {
         return desks;
     }
+
     public Desk getDesksById(int id) {
         if (id > desks.size()) {
             return null;
@@ -46,6 +47,6 @@ public class DeskService {
                         deskNumber(37).
                         floor(2).
                         build()
-                ));
+        ));
     }
 }

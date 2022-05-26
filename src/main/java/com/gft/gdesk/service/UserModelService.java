@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class UserModelService {
-    private List<UserModel> users = new ArrayList<>();
+    private final List<UserModel> users = new ArrayList<>();
 
     public List<UserModel> getAllUsers() {
         return users;
@@ -34,7 +34,7 @@ public class UserModelService {
                 .filter(x -> x.getEmail().equals(toRegister.getEmail())).findAny();
         if (userCheck.isPresent()) {
             UserModel userFromDb = userCheck.get();
-            return "WAIT_FOR_APPROVAL".equals(userFromDb.getSTATUS()) ? "User is waiting for approval" : "User with with this email already exists";
+            return "WAIT_FOR_APPROVAL".equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
         }
         validateFields(toRegister);
         users.add(toRegister);
@@ -59,7 +59,7 @@ public class UserModelService {
                         company("GFT").
                         email("jan.kowalski@gmail.com").
                         password("haslo123").
-                        STATUS("APPROVED").
+                        status("APPROVED").
                         build(),
                 UserModel.builder().
                         id(1L).
@@ -68,7 +68,7 @@ public class UserModelService {
                         company("Konkurencja").
                         email("jan.kowalski@gmail.com").
                         password("xd2137").
-                        STATUS("APPROVED").
+                        status("APPROVED").
                         build(),
                 UserModel.builder().
                         id(2L).
@@ -77,7 +77,7 @@ public class UserModelService {
                         company("GFT").
                         email("canadian.enjoyer@gmail.com").
                         password("1337canada").
-                        STATUS("BLOCKED").
+                        status("BLOCKED").
                         build()
         ));
     }

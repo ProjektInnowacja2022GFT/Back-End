@@ -15,6 +15,6 @@ public class UserModel {
     private String company;
     private String email;
     private String password;
-    private String STATUS = "WAIT_FOR_APPROVAL";
-    private static final String ROLE = "USER";
+    private String status = "WAIT_FOR_APPROVAL";
+    private static final String ROLE = "USER";  // move to enum
 }
