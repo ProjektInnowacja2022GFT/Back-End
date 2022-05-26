@@ -1,6 +1,8 @@
 package com.gft.gdesk.service;
 
-import com.gft.gdesk.dto.Reservation;
+import com.gft.gdesk.dto.Reservations;
+import lombok.*;
+import org.apache.catalina.User;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -12,44 +14,44 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class ReservationService {
-    private List<Reservation> reservations = new ArrayList<>();
-    private UserModelService usersService;
-    private DeskService desksService;
+public class ReservationsService {
+    private List<Reservations> reservations = new ArrayList<>();
+    private UsersService usersService;
+    private DesksService desksService;
 
-    public ReservationService(UserModelService usersService,
-                              DeskService desksService) {
+    public ReservationsService(UsersService usersService,
+                               DesksService desksService) {
         this.usersService = usersService;
         this.desksService = desksService;
     }
 
-    public List<Reservation> getAllReservations() {
+    public List<Reservations> getAllReservations() {
         return reservations;
     }
 
     @PostConstruct
     public void setInitialReservations() {
         this.reservations.addAll(Arrays.asList(
-                Reservation.builder().
+                Reservations.builder().
                         id(0L).
                         user(usersService.getUsersById(0)).
                         desk(desksService.getDesksById(0)).
-                        reservaretionsDateStart(LocalDate.now()).
-                        reservationsDateEnd(LocalDate.now().plusDays(3)).
+                        reservations_date_start(LocalDate.now()).
+                        reservations_date_end(LocalDate.now().plusDays(3)).
                         build(),
-                Reservation.builder().
+                Reservations.builder().
                         id(1L).
                         user(usersService.getUsersById(1)).
                         desk(desksService.getDesksById(1)).
-                        reservaretionsDateStart(LocalDate.now()).
-                        reservationsDateEnd(LocalDate.now().plusDays(4)).
+                        reservations_date_start(LocalDate.now()).
+                        reservations_date_end(LocalDate.now().plusDays(4)).
                         build(),
-                Reservation.builder().
+                Reservations.builder().
                         id(2L).
                         user(usersService.getUsersById(2)).
                         desk(desksService.getDesksById(2)).
-                        reservaretionsDateStart(LocalDate.now().plusDays(1)).
-                        reservationsDateEnd(LocalDate.now().plusDays(2)).
+                        reservations_date_start(LocalDate.now().plusDays(1)).
+                        reservations_date_end(LocalDate.now().plusDays(2)).
                         build()
         ));
     }

@@ -9,9 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 
-public class Desk {
+public class Desks {
     private long id;
     private String sector;
-    private int deskNumber;
+    private int desk_number;
     private int floor;
 }

@@ -1,7 +1,7 @@
 package com.gft.gdesk.service;
 
 
-import com.gft.gdesk.dto.Desk;
+import com.gft.gdesk.dto.Desks;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -10,14 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class DeskService {
+public class DesksService {
 
-    private List<Desk> desks = new ArrayList<>();
+    private List<Desks> desks = new ArrayList<>();
 
-    public List<Desk> getAllDesks() {
+    public List<Desks> getAllDesks() {
         return desks;
     }
-    public Desk getDesksById(int id) {
+    public Desks getDesksById(int id) {
         if (id > desks.size()) {
             return null;
         }
@@ -28,22 +28,22 @@ public class DeskService {
     @PostConstruct
     public void setInitialUsers() {
         this.desks.addAll(Arrays.asList(
-                Desk.builder().
+                Desks.builder().
                         id(0L).
                         sector("A").
-                        deskNumber(11).
+                        desk_number(11).
                         floor(1).
                         build(),
-                Desk.builder().
+                Desks.builder().
                         id(1L).
                         sector("A").
-                        deskNumber(21).
+                        desk_number(21).
                         floor(1).
                         build(),
-                Desk.builder().
+                Desks.builder().
                         id(2L).
                         sector("C").
-                        deskNumber(37).
+                        desk_number(37).
                         floor(2).
                         build()
                 ));

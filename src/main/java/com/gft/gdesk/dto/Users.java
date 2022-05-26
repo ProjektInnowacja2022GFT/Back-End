@@ -8,13 +8,13 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 
-public class UserModel {
+public class Users {
     private long id;
     private String name;
     private String surname;
     private String company;
     private String email;
     private String password;
-    private String STATUS = "WAIT_FOR_APPROVAL";
-    private static final String ROLE = "USER";
+    private String role = "USER";
+    private String status = "WAIT_FOR_APPROVAL";
 }
