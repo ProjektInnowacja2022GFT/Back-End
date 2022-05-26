@@ -1,8 +1,8 @@
 package com.gft.gdesk.controller;
 
 
-import com.gft.gdesk.dto.Users;
-import com.gft.gdesk.service.UsersService;
+import com.gft.gdesk.dto.User;
+import com.gft.gdesk.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +16,21 @@ import java.util.List;
 @Getter
 @Setter
 
-public class UsersController {
+public class UserController {
 
-    private UsersService userService;
+    private UserService userService;
 
-    public UsersController(UsersService userService){
+    public UserController(UserService userService){
         this.userService = userService;
     }
 
     @GetMapping("/getUsers")
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping("/login")
-    public Users login(@RequestBody Users toLogin){
+    public User login(@RequestBody User toLogin){
         return userService.loginService.login(toLogin);
     }
 

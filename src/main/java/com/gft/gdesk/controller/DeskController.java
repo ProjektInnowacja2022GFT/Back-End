@@ -1,7 +1,7 @@
 package com.gft.gdesk.controller;
 
-import com.gft.gdesk.dto.Desks;
-import com.gft.gdesk.service.DesksService;
+import com.gft.gdesk.dto.Desk;
+import com.gft.gdesk.service.DeskService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +15,15 @@ import java.util.List;
 
 @Getter
 @Setter
-public class DesksController {
-    private DesksService deskService;
+public class DeskController {
+    private DeskService deskService;
 
-    public DesksController(DesksService deskService){
+    public DeskController(DeskService deskService){
         this.deskService = deskService;
     }
 
     @GetMapping("/getDesks")
-    public List<Desks> getDesks() {
+    public List<Desk> getDesks() {
         return deskService.getAllDesks();
     }
 }

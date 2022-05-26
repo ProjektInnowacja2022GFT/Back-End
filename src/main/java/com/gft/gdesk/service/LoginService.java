@@ -1,6 +1,6 @@
 package com.gft.gdesk.service;
 
-import com.gft.gdesk.dto.Users;
+import com.gft.gdesk.dto.User;
 import com.gft.gdesk.exception.loginExceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import javax.naming.AuthenticationException;
 @Service
 @AllArgsConstructor
 public class LoginService {
-    private static final String USER_DOSENT_EXISTS_MSG = "Incorrect email or password";
+    private static final String USER_NOT_EXISTS_MSG = "Incorrect email or password";
     private static final String USER_STATUS_PENDING_MSG = "Your account is still pending approval";
     private static final String USER_STATUS_BLOCKED_MSG = "Your account has been rejected";
     public static final String USER_STATUS_PENDING = "WAIT_FOR_APPROVAL";
@@ -21,10 +21,10 @@ public class LoginService {
     //private final UsersRepository userRepository;
 
 
-    public Users login(Users toLogin) {
+    public User login(User toLogin) {
         try {
 
-            Users user = loadUserByEmail(toLogin.getEmail());
+            User user = loadUserByEmail(toLogin.getEmail());
             validatePassword(user, toLogin.getPassword());
             authenticateUser(user);
             return getReducedUserInfo(user);
@@ -36,8 +36,8 @@ public class LoginService {
         }
     }
 
-    private Users getReducedUserInfo(Users user) {
-        return Users.builder()
+    private User getReducedUserInfo(User user) {
+        return User.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .surname(user.getSurname())
@@ -47,7 +47,7 @@ public class LoginService {
                 .build();
     }
 
-    private void authenticateUser(Users user) throws AuthenticationException {
+    private void authenticateUser(User user) throws AuthenticationException {
         switch (user.getStatus()) {
             case USER_STATUS_PENDING:
                 throw new AuthenticationException(USER_STATUS_PENDING_MSG);
@@ -56,9 +56,9 @@ public class LoginService {
         }
     }
 
-    private Users loadUserByEmail(String email) throws UserNotFoundException {
+    private User loadUserByEmail(String email) throws UserNotFoundException {
         if (email.equals("testMail@a.pl"))
-            return Users.builder().
+            return User.builder().
                     id(0L).
                     name("Jan").
                     surname("Kowalski").
@@ -69,7 +69,7 @@ public class LoginService {
                     status("APPROVED").
                     build();
         else if (email.equals("abc@a.pl")) {
-            return Users.builder().
+            return User.builder().
                     id(0L).
                     name("Mirek").
                     surname("Karas").
@@ -80,7 +80,7 @@ public class LoginService {
                     status("BLOCKED").
                     build();
         } else
-            throw new UserNotFoundException(USER_DOSENT_EXISTS_MSG);
+            throw new UserNotFoundException(USER_NOT_EXISTS_MSG);
 
         //todo uncomment && remove static content after integration with database
 //        return userRepository
@@ -88,9 +88,9 @@ public class LoginService {
 //                .orElseThrow(() -> new UserNotFoundException(USER_DOSENT_EXISTS_MSG));
     }
 
-    private void validatePassword(Users user, String password) throws UserNotFoundException {
+    private void validatePassword(User user, String password) throws UserNotFoundException {
         if (!password.equals(user.getPassword())) {
-            throw new UserNotFoundException(USER_DOSENT_EXISTS_MSG);
+            throw new UserNotFoundException(USER_NOT_EXISTS_MSG);
         }
     }
 }
