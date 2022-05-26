@@ -17,7 +17,7 @@ public class LoginService {
     private static final String USER_STATUS_BLOCKED_MSG = "Your account has been rejected";
     public static final String USER_STATUS_PENDING = "WAIT_FOR_APPROVAL";
     public static final String USER_STATUS_BLOCKED = "BLOCKED";
-    
+
     //todo uncomment after integration with database
     //private final UsersRepository userRepository;
 

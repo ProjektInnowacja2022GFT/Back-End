@@ -2,6 +2,7 @@ package com.gft.gdesk.controller;
 
 
 import com.gft.gdesk.dto.User;
+import com.gft.gdesk.service.LoginService;
 import com.gft.gdesk.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    public LoginService loginService;
 
     public UserController(UserService userService){
         this.userService = userService;
@@ -31,7 +33,7 @@ public class UserController {
 
     @PostMapping("/login")
     public User login(@RequestBody User toLogin){
-        return userService.loginService.login(toLogin);
+        return loginService.login(toLogin);
     }
 
 }

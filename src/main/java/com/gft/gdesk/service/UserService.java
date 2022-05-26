@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
     private List<User> users;
-    public LoginService loginService;
     public List<User> getAllUsers() {
         return users;
     }
