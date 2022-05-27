@@ -18,9 +18,6 @@ public class UserService {
     }
 
     public User getUsersById(int id){
-        if(id > users.size()){
-            return null;
-        }
         return users.get(id);
     }
 

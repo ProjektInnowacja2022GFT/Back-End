@@ -17,6 +17,7 @@ public class DeskService {
     public List<Desk> getAllDesks() {
         return desks;
     }
+
     public Desk getDesksById(int id) {
         if (id > desks.size()) {
             return null;
@@ -46,6 +47,6 @@ public class DeskService {
                         desk_number(37).
                         floor(2).
                         build()
-                ));
+        ));
     }
 }

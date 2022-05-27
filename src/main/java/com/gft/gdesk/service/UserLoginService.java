@@ -11,7 +11,7 @@ import javax.naming.AuthenticationException;
 
 @Service
 @AllArgsConstructor
-public class LoginService {
+public class UserLoginService {
     private static final String USER_NOT_EXISTS_MSG = "Incorrect email or password";
     private static final String USER_PENDING_MSG = "Your account is still pending approval";
     private static final String USER_BLOCKED_MSG = "Your account has been rejected";
@@ -38,14 +38,7 @@ public class LoginService {
     }
 
     private User getReducedUserInfo(User user) {
-        return User.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .surname(user.getSurname())
-                .company(user.getCompany())
-                .email(user.getEmail())
-                .role("USER")
-                .build();
+        return user;
     }
 
     private void authenticateUser(User user) throws AuthenticationException {
@@ -59,27 +52,27 @@ public class LoginService {
 
     private User loadUserByEmail(String email) throws UserNotFoundException {
         if (email.equals("testMail@a.pl"))
-            return User.builder().
-                    id(0L).
-                    name("Jan").
-                    surname("Kowalski").
-                    company("GFT").
-                    email("jan.kowalski@gmail.com").
-                    password("haslo123").
-                    role("USER").
-                    status("APPROVED").
-                    build();
+            return User.builder()
+                    .id(0L)
+                    .name("Jan")
+                    .surname("Kowalski")
+                    .company("GFT")
+                    .email("jan.kowalski@gmail.com")
+                    .password("haslo123")
+                    .role("USER")
+                    .status("APPROVED")
+                    .build();
         else if (email.equals("abc@a.pl")) {
-            return User.builder().
-                    id(0L).
-                    name("Mirek").
-                    surname("Karas").
-                    company("ESP").
-                    email("abc@a.pl").
-                    password("abcd").
-                    role("USER").
-                    status("BLOCKED").
-                    build();
+            return User.builder()
+                    .id(0L)
+                    .name("Mirek")
+                    .surname("Karas")
+                    .company("ESP")
+                    .email("abc@a.pl")
+                    .password("abcd")
+                    .role("USER")
+                    .status("BLOCKED")
+                    .build();
         } else
             throw new UserNotFoundException(USER_NOT_EXISTS_MSG);
 
