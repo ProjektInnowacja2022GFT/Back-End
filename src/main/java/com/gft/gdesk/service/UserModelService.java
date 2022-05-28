@@ -1,8 +1,7 @@
 package com.gft.gdesk.service;
 
 
-import com.gft.gdesk.dto.Book;
-import com.gft.gdesk.dto.Users;
+import com.gft.gdesk.dto.UserModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,34 +15,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class UsersService {
-    private List<Users> users = new ArrayList<>();
+public class UserModelService {
+    private final List<UserModel> users = new ArrayList<>();
 
-    public List<Users> getAllUsers() {
+    public List<UserModel> getAllUsers() {
         return users;
     }
 
-    public List<Users> getWaitForApprovalUsers() {
-        List<Users> waitForApprovalUsers=new ArrayList<>();
-        for(int i=0; i<users.size(); i++) {
-            if(users.get(i).getStatus().equals("WAIT_FOR_APPROVAL"))
-                waitForApprovalUsers.add(users.get(i));
-        }
-        return waitForApprovalUsers;
-    }
-
-    public Users getUsersById(int id) {
+    public UserModel getUsersById(int id) {
         if (id > users.size()) {
             return null;
         }
         return users.get(id);
     }
 
-    public String registerUser(Users toRegister) {
-        Optional<Users> userCheck = users.stream()
+    public String registerUser(UserModel toRegister) {
+        Optional<UserModel> userCheck = users.stream()
                 .filter(x -> x.getEmail().equals(toRegister.getEmail())).findAny();
         if (userCheck.isPresent()) {
-            Users userFromDb = userCheck.get();
+            UserModel userFromDb = userCheck.get();
             return "WAIT_FOR_APPROVAL".equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
         }
         validateFields(toRegister);
@@ -51,7 +41,7 @@ public class UsersService {
         return "User successfully registered, now wait for approval";
     }
 
-    private void validateFields(Users toRegister) {
+    private void validateFields(UserModel toRegister) {
         Pattern pattern = Pattern.compile("^[\\w-\\.]{2,}@([\\w-]+\\.)+[\\w-]{2,4}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(toRegister.getEmail());
         if (!matcher.find()) {
@@ -62,34 +52,31 @@ public class UsersService {
     @PostConstruct
     public void setInitialUsers() {
         this.users.addAll(Arrays.asList(
-                Users.builder().
+                UserModel.builder().
                         id(0L).
                         name("Jan").
                         surname("Kowalski").
                         company("GFT").
                         email("jan.kowalski@gmail.com").
                         password("haslo123").
-                        role("USER").
                         status("APPROVED").
                         build(),
-                Users.builder().
+                UserModel.builder().
                         id(1L).
                         name("Piotr").
                         surname("Jaworski").
                         company("Konkurencja").
                         email("jan.kowalski@gmail.com").
                         password("xd2137").
-                        role("USER").
                         status("APPROVED").
                         build(),
-                Users.builder().
+                UserModel.builder().
                         id(2L).
                         name("Canadian").
                         surname("Enjoyer").
                         company("GFT").
                         email("canadian.enjoyer@gmail.com").
                         password("1337canada").
-                        role("USER").
                         status("BLOCKED").
                         build()
         ));
