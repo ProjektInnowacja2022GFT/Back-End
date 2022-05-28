@@ -1,5 +1,6 @@
 package com.gft.gdesk.service;
 
+import com.gft.gdesk.dto.Desk;
 import com.gft.gdesk.dto.Reservation;
 
 import javax.annotation.PostConstruct;
@@ -7,7 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import com.gft.gdesk.dto.UserModel;
 import org.springframework.stereotype.Service;
 
 
@@ -21,6 +24,22 @@ public class ReservationService {
                               DeskService desksService) {
         this.usersService = usersService;
         this.desksService = desksService;
+    }
+
+    public List<Desk> getFreeDesks() {
+        List<Desk> freeDesks=new ArrayList<>();
+        for (Desk desk : desksService.getAllDesks())
+        {
+            if((reservations.stream()
+                    .filter(reservation -> desk.getId()==reservation.getDesk().getId())
+                    .findAny()
+                    .orElse(null))==null
+            )
+            {
+                freeDesks.add(desk);
+            }
+        }
+        return freeDesks;
     }
 
     public List<Reservation> getAllReservations() {
