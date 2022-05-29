@@ -1,6 +1,6 @@
 package com.gft.gdesk.service;
 
-import com.gft.gdesk.dto.Users;
+import com.gft.gdesk.dto.User;
 import com.gft.gdesk.exception.UserNotFoundException;
 import com.gft.gdesk.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,9 @@ import java.util.Optional;
 public class AdminService
 {
     private final UserRepository userRepository;
+    private static final String WAITING_FOR_APPROVAL = "WAITING_FOR_APPROVAL";
+    private static final String APPROVED = "APPROVED";
+
 
     public AdminService(UserRepository userRepository)
     {
@@ -19,17 +22,17 @@ public class AdminService
 
     public void acceptNewUser(Long Id)
     {
-        Optional<Users> user = Optional.ofNullable(userRepository.findAllById(Id));
+        Optional<User> user = Optional.ofNullable(userRepository.findAllById(Id));
 
         if(!user.isPresent())
         {
             throw new UserNotFoundException("User does not exist");
         }
 
-        Users userToUpdate = user.get();
-        if(userToUpdate.getStatus().equals("WAIT_FOR_APPROVAL"))
+        User userToUpdate = user.get();
+        if(userToUpdate.getStatus().equals(WAITING_FOR_APPROVAL))
         {
-            userToUpdate.setStatus("APPROVED");
+            userToUpdate.setStatus(APPROVED);
         }
         userRepository.save(userToUpdate);
     }
