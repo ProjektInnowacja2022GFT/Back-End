@@ -32,22 +32,22 @@ public class ReservationService {
         this.reservations.addAll(Arrays.asList(
                 Reservation.builder().
                         id(0L).
-                        user(usersService.getUsersById(0)).
-                        desk(desksService.getDesksById(0)).
+//                        user(usersService.getUsersById(0)).
+//                        desk(desksService.getDesksById(0)).
                         reservaretionsDateStart(LocalDate.now()).
                         reservationsDateEnd(LocalDate.now().plusDays(3)).
                         build(),
                 Reservation.builder().
                         id(1L).
-                        user(usersService.getUsersById(1)).
-                        desk(desksService.getDesksById(1)).
+//                        user(usersService.getUsersById(1)).
+//                        desk(desksService.getDesksById(1)).
                         reservaretionsDateStart(LocalDate.now()).
                         reservationsDateEnd(LocalDate.now().plusDays(4)).
                         build(),
                 Reservation.builder().
                         id(2L).
-                        user(usersService.getUsersById(2)).
-                        desk(desksService.getDesksById(2)).
+//                        user(usersService.getUsersById(2)).
+//                        desk(desksService.getDesksById(2)).
                         reservaretionsDateStart(LocalDate.now().plusDays(1)).
                         reservationsDateEnd(LocalDate.now().plusDays(2)).
                         build()
