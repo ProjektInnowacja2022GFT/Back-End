@@ -1,6 +1,7 @@
 package com.gft.gdesk.dto;
 
 import lombok.*;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,11 +20,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
-    private List<UserModel> users;
+    @ManyToOne()
+    private UserModel user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "desk")
-    private List<Desk> desks;
+    @ManyToOne()
+    private Desk desk;
 
     private LocalDate reservaretionsDateStart;
     private LocalDate reservationsDateEnd;

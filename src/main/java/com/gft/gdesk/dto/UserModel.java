@@ -1,8 +1,11 @@
 package com.gft.gdesk.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +25,11 @@ public class UserModel {
     private String password;
     private String status = "WAIT_FOR_APPROVAL";
     private static final String ROLE = "USER";  // move to enum
-    @ManyToOne()
-    private Reservation reservation;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Reservation> reservationList;
 
 }
