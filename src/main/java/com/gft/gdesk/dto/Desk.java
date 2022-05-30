@@ -25,6 +25,6 @@ public class Desk {
     private int floor;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "desk")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "desk", cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 }
