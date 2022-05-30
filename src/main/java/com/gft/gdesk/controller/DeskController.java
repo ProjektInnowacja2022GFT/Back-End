@@ -22,7 +22,7 @@ public class DeskController {
         this.deskService = deskService;
     }
 
-    @GetMapping("/getDesks")
+    @GetMapping("/desks")
     public List<Desk> getDesks() {
         return deskService.getAllDesks();
     }
