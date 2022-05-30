@@ -19,9 +19,9 @@ import java.util.List;
 @SpringBootApplication
 public class Initializer implements CommandLineRunner {
 
-    private DeskRepository deskRepository;
-    private ReservationRepository reservationRepository;
-    private UserModelRepository userModelRepository;
+    private final DeskRepository deskRepository;
+    private final ReservationRepository reservationRepository;
+    private final UserModelRepository userModelRepository;
 
     private final List<Desk> desks = new ArrayList<>();
     private final List<Reservation> reservations = new ArrayList<>();
