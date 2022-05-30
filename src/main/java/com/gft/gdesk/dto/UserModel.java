@@ -26,10 +26,9 @@ public class UserModel {
     private String status = "WAIT_FOR_APPROVAL";
     private static final String ROLE = "USER";  // move to enum
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 
 }
