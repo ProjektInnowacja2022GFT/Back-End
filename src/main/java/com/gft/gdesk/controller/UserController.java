@@ -14,20 +14,17 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 @RestController
 
-@Getter
-@Setter
-
 public class UserController {
 
-    private UserService userService;
-    public UserLoginService userLoginService;
+    private final UserService userService;
+    private final UserLoginService userLoginService;
 
     public UserController(UserService userService, UserLoginService userLoginService){
         this.userService = userService;
         this.userLoginService = userLoginService;
     }
 
-    @GetMapping("/getUsers")
+    @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getAllUsers();
     }

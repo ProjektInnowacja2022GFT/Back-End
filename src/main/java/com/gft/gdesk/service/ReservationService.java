@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationService {
-    private List<Reservation> reservations = new ArrayList<>();
-    private UserService userService;
-    private DeskService desksService;
+    private final List<Reservation> reservations = new ArrayList<>();
+    private final UserService userService;
+    private final DeskService desksService;
 
     public ReservationService(UserService userService,
                               DeskService desksService) {
@@ -34,22 +34,22 @@ public class ReservationService {
                         id(0L).
                         user(userService.getUsersById(0)).
                         desk(desksService.getDesksById(0)).
-                        reservations_date_start(LocalDate.now()).
-                        reservations_date_end(LocalDate.now().plusDays(3)).
+                        reservationsDateStart(LocalDate.now()).
+                        reservationsDateEnd(LocalDate.now().plusDays(3)).
                         build(),
                 Reservation.builder().
                         id(1L).
                         user(userService.getUsersById(1)).
                         desk(desksService.getDesksById(1)).
-                        reservations_date_start(LocalDate.now()).
-                        reservations_date_end(LocalDate.now().plusDays(4)).
+                        reservationsDateStart(LocalDate.now()).
+                        reservationsDateEnd(LocalDate.now().plusDays(4)).
                         build(),
                 Reservation.builder().
                         id(2L).
                         user(userService.getUsersById(2)).
                         desk(desksService.getDesksById(2)).
-                        reservations_date_start(LocalDate.now().plusDays(1)).
-                        reservations_date_end(LocalDate.now().plusDays(2)).
+                        reservationsDateStart(LocalDate.now().plusDays(1)).
+                        reservationsDateEnd(LocalDate.now().plusDays(2)).
                         build()
         ));
     }

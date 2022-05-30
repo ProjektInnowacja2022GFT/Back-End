@@ -15,8 +15,8 @@ public class UserLoginService {
     private static final String USER_NOT_EXISTS_MSG = "Incorrect email or password";
     private static final String USER_PENDING_MSG = "Your account is still pending approval";
     private static final String USER_BLOCKED_MSG = "Your account has been rejected";
-    public static final String USER_STATUS_PENDING = "WAIT_FOR_APPROVAL";
-    public static final String USER_STATUS_BLOCKED = "BLOCKED";
+    private static final String USER_STATUS_PENDING = "WAIT_FOR_APPROVAL";
+    private static final String USER_STATUS_BLOCKED = "BLOCKED";
 
     //todo uncomment after integration with database
     //private final UsersRepository userRepository;
@@ -28,17 +28,13 @@ public class UserLoginService {
             User user = loadUserByEmail(toLogin.getEmail());
             validatePassword(user, toLogin.getPassword());
             authenticateUser(user);
-            return getReducedUserInfo(user);
+            return user;
 
         } catch (UserNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
-    }
-
-    private User getReducedUserInfo(User user) {
-        return user;
     }
 
     private void authenticateUser(User user) throws AuthenticationException {
