@@ -24,12 +24,12 @@ public class UserModelController {
         return userService.registerUser(toRegister);
     }
 
-    @GetMapping("/all-users")
+    @GetMapping("/allUsers")
     public List<UserModel> getUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/waitForApproval-users")
+    @GetMapping("/waitForApprovalUsers")
     public List<UserModel> getWaitForApprovalUsers() {
         return userService.getWaitForApprovalUsers();
     }

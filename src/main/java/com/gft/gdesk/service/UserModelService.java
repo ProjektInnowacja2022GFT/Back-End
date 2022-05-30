@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
 @Service
 public class UserModelService {
     private final List<UserModel> users = new ArrayList<>();
+    public static final String MESSAGE_SUCCESSFULLY_REGISTERED = "User successfully registered, now wait for approval";
+    public static final String MESSAGE_WAITING_FOR_APPROVAL = "User is waiting for approval";
+    public static final String MESSAGE_USER_EXISTS = "User with with this email already exists";
     private static final String WAIT_FOR_APPROVAL = "WAIT_FOR_APPROVAL";
 
     public List<UserModel> getAllUsers() {
@@ -45,11 +48,11 @@ public class UserModelService {
                 .filter(x -> x.getEmail().equals(toRegister.getEmail())).findAny();
         if (userCheck.isPresent()) {
             UserModel userFromDb = userCheck.get();
-            return WAIT_FOR_APPROVAL.equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
+            return WAIT_FOR_APPROVAL.equals(userFromDb.getStatus()) ? MESSAGE_WAITING_FOR_APPROVAL : MESSAGE_USER_EXISTS;
         }
         validateFields(toRegister);
         users.add(toRegister);
-        return "User successfully registered, now wait for approval";
+        return MESSAGE_SUCCESSFULLY_REGISTERED;
     }
 
     private void validateFields(UserModel toRegister) {
