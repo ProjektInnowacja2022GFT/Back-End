@@ -1,6 +1,10 @@
 package com.gft.gdesk.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -8,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 
-public class Users {
+public class User {
     private long id;
     private String name;
     private String surname;

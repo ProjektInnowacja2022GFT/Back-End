@@ -1,6 +1,10 @@
 package com.gft.gdesk.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -10,10 +14,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 
-public class Reservations {
+public class Reservation {
     private long id;
-    private Users user;
-    private Desks desk;
+    private User user;
+    private Desk desk;
     private LocalDate reservations_date_start;
     private LocalDate reservations_date_end;
 }
