@@ -1,6 +1,5 @@
 package com.gft.gdesk.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
