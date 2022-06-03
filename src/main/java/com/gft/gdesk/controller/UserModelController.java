@@ -28,4 +28,9 @@ public class UserModelController {
     public List<UserModel> getUsers() {
         return userService.getAllUsers();
     }
+
+    @GetMapping("/wait-for-approval-users")
+    public List<UserModel> getWaitForApprovalUsers() {
+        return userService.getWaitForApprovalUsers();
+    }
 }
