@@ -1,0 +1,10 @@
+#zapytac czemu create-drop wywala
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=url to you database
+spring.datasource.username=db username
+server.port=db port
+spring.datasource.password=db password
+spring.datasource.driver-class-name= driver for your db
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+
+#remove .example from file name ;)
