@@ -1,12 +1,12 @@
 package com.gft.gdesk.repository;
 
-import com.gft.gdesk.dto.User;
+import com.gft.gdesk.dto.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>
+public interface UserRepository extends JpaRepository<UserModel, Long>
 {
-    User findByStatus(String status);
-    User findAllById(Long Id);
+    UserModel findByStatus(String status);
+    UserModel findAllById(Long Id);
 }

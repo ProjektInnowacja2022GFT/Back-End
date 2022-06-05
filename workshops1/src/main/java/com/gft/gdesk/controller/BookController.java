@@ -1,7 +1,5 @@
 package com.gft.gdesk.controller;
 
-import com.gft.gdesk.dto.Book;
-import com.gft.gdesk.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
