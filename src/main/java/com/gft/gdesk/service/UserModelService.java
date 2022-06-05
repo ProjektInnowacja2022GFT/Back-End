@@ -2,10 +2,12 @@ package com.gft.gdesk.service;
 
 
 import com.gft.gdesk.dto.UserModel;
+import com.gft.gdesk.repository.UserModelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,24 +17,17 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @Service
 public class UserModelService {
-    private final List<UserModel> users = new ArrayList<>();
+    private final UserModelRepository userModelRepository;
     private static final String WAIT_FOR_APPROVAL = "WAIT_FOR_APPROVAL";
 
     public List<UserModel> getAllUsers() {
-        return users;
-    }
-
-    public UserModel getUsersById(int id) {
-        if (id > users.size()) {
-            return null;
-        }
-        return users.get(id);
+        return userModelRepository.findAll();
     }
 
     public List<UserModel> getWaitForApprovalUsers() {
-        List<UserModel> waitForApprovalUsers=new ArrayList<>();
-        for (UserModel user : users) {
-            if(WAIT_FOR_APPROVAL.equals(user.getStatus())) {
+        List<UserModel> waitForApprovalUsers = new ArrayList<>();
+        for (UserModel user : userModelRepository.findAll()) {
+            if (WAIT_FOR_APPROVAL.equals(user.getStatus())) {
                 waitForApprovalUsers.add(user);
             }
         }
@@ -40,14 +35,14 @@ public class UserModelService {
     }
 
     public String registerUser(UserModel toRegister) {
-        Optional<UserModel> userCheck = users.stream()
+        Optional<UserModel> userCheck = userModelRepository.findAll().stream()
                 .filter(x -> x.getEmail().equals(toRegister.getEmail())).findAny();
         if (userCheck.isPresent()) {
             UserModel userFromDb = userCheck.get();
             return WAIT_FOR_APPROVAL.equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
         }
         validateFields(toRegister);
-        users.add(toRegister);
+        userModelRepository.save(toRegister);
         return "User successfully registered, now wait for approval";
     }
 
@@ -58,5 +53,4 @@ public class UserModelService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
-
 }
