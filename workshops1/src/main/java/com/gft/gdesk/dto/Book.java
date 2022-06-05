@@ -1,6 +1,5 @@
 package com.gft.gdesk.dto;
 
-import com.gft.gdesk.service.BookService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

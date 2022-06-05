@@ -19,7 +19,7 @@ public class ReservationController {
         this.reservationsService = reservationsService;
     }
 
-    @GetMapping("/all-reservations")
+    @GetMapping("/reservations")
     public List<Reservation> getReservations() {
         return reservationsService.getAllReservations();
     }

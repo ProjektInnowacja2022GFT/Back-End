@@ -1,7 +1,5 @@
 package com.gft.gdesk;
 
-import com.gft.gdesk.dto.Book;
-import com.gft.gdesk.service.BookService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
