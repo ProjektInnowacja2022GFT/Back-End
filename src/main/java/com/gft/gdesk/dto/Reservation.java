@@ -16,8 +16,7 @@ import java.time.LocalDate;
 
 public class Reservation {
     private long id;
-    private User user;
-    private Desk desk;
-    private LocalDate reservationsDateStart;
+    private UserModel user;
+    private LocalDate reservaretionsDateStart;
     private LocalDate reservationsDateEnd;
 }

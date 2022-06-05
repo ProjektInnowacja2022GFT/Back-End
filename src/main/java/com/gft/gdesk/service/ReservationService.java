@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationService {
+
     private final List<Reservation> reservations = new ArrayList<>();
     private final UserService userService;
     private final DeskService desksService;
@@ -20,6 +21,7 @@ public class ReservationService {
     public ReservationService(UserService userService,
                               DeskService desksService) {
         this.userService = userService;
+
         this.desksService = desksService;
     }
 
