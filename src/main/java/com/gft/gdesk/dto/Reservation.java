@@ -27,7 +27,7 @@ public class Reservation {
 
     @ManyToOne()
     private Desk desk;
-  
+
     private LocalDate reservaretionsDateStart;
     private LocalDate reservationsDateEnd;
 }
