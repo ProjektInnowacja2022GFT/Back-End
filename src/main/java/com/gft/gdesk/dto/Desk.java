@@ -1,6 +1,5 @@
 package com.gft.gdesk.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +15,6 @@ import lombok.Setter;
 public class Desk {
     private long id;
     private String sector;
-    private int desk_number;
+    private int deskNumber;
     private int floor;
 }

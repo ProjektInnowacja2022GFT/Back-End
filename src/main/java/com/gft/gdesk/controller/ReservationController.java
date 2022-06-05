@@ -10,17 +10,16 @@ import java.util.List;
 
 @RequestMapping("/api/v1/reservation")
 @RestController
-
 public class ReservationController {
 
-    private ReservationService reservationService;
+    private ReservationService reservationsService;
 
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
+    public ReservationController(ReservationService reservationsService) {
+        this.reservationsService = reservationsService;
     }
 
-    @GetMapping("/getReservations")
+    @GetMapping("/reservations")
     public List<Reservation> getReservations() {
-        return reservationService.getAllReservations();
+        return reservationsService.getAllReservations();
     }
 }

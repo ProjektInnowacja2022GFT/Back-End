@@ -10,7 +10,6 @@ import java.util.List;
 
 @RequestMapping("/api/v1/desk")
 @RestController
-
 public class DeskController {
     private DeskService deskService;
 
@@ -18,7 +17,7 @@ public class DeskController {
         this.deskService = deskService;
     }
 
-    @GetMapping("/getDesks")
+    @GetMapping("/desks")
     public List<Desk> getDesks() {
         return deskService.getAllDesks();
     }

@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class DeskService {
 
-    private List<Desk> desks = new ArrayList<>();
+    private final List<Desk> desks = new ArrayList<>();
 
     public List<Desk> getAllDesks() {
         return desks;
@@ -31,21 +31,21 @@ public class DeskService {
                 Desk.builder().
                         id(0L).
                         sector("A").
-                        desk_number(11).
+                        deskNumber(11).
                         floor(1).
                         build(),
                 Desk.builder().
                         id(1L).
                         sector("A").
-                        desk_number(21).
+                        deskNumber(21).
                         floor(1).
                         build(),
                 Desk.builder().
                         id(2L).
                         sector("C").
-                        desk_number(37).
+                        deskNumber(37).
                         floor(2).
                         build()
-                ));
+        ));
     }
 }
