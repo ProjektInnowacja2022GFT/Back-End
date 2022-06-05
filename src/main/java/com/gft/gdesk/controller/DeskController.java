@@ -17,6 +17,7 @@ public class DeskController {
         this.deskService = deskService;
     }
 
+
     @GetMapping("/desks")
     public List<Desk> getDesks() {
         return deskService.getAllDesks();
