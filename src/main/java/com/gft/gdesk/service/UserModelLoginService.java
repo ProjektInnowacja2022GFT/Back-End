@@ -1,6 +1,6 @@
 package com.gft.gdesk.service;
 
-import com.gft.gdesk.dto.User;
+import com.gft.gdesk.dto.UserModel;
 import com.gft.gdesk.exception.loginExceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import javax.naming.AuthenticationException;
 
 @Service
 @AllArgsConstructor
-public class UserLoginService {
+public class UserModelLoginService {
     private static final String USER_NOT_EXISTS_MSG = "Incorrect email or password";
     private static final String USER_PENDING_MSG = "Your account is still pending approval";
     private static final String USER_BLOCKED_MSG = "Your account has been rejected";
@@ -22,10 +22,10 @@ public class UserLoginService {
     //private final UsersRepository userRepository;
 
 
-    public User login(User toLogin) {
+    public UserModel login(UserModel toLogin) {
         try {
 
-            User user = loadUserByEmail(toLogin.getEmail());
+            UserModel user = loadUserByEmail(toLogin.getEmail());
             validatePassword(user, toLogin.getPassword());
             authenticateUser(user);
             return user;
@@ -37,7 +37,7 @@ public class UserLoginService {
         }
     }
 
-    private void authenticateUser(User user) throws AuthenticationException {
+    private void authenticateUser(UserModel user) throws AuthenticationException {
         switch (user.getStatus()) {
             case USER_STATUS_PENDING:
                 throw new AuthenticationException(USER_PENDING_MSG);
@@ -46,27 +46,25 @@ public class UserLoginService {
         }
     }
 
-    private User loadUserByEmail(String email) throws UserNotFoundException {
+    private UserModel loadUserByEmail(String email) throws UserNotFoundException {
         if (email.equals("testMail@a.pl"))
-            return User.builder()
+            return UserModel.builder()
                     .id(0L)
                     .name("Jan")
                     .surname("Kowalski")
                     .company("GFT")
                     .email("jan.kowalski@gmail.com")
                     .password("haslo123")
-                    .role("USER")
                     .status("APPROVED")
                     .build();
         else if (email.equals("abc@a.pl")) {
-            return User.builder()
+            return UserModel.builder()
                     .id(0L)
                     .name("Mirek")
                     .surname("Karas")
                     .company("ESP")
                     .email("abc@a.pl")
                     .password("abcd")
-                    .role("USER")
                     .status("BLOCKED")
                     .build();
         } else
@@ -78,7 +76,7 @@ public class UserLoginService {
 //                .orElseThrow(() -> new UserNotFoundException(USER_DOSENT_EXISTS_MSG));
     }
 
-    private void validatePassword(User user, String password) throws UserNotFoundException {
+    private void validatePassword(UserModel user, String password) throws UserNotFoundException {
         if (!password.equals(user.getPassword())) {
             throw new UserNotFoundException(USER_NOT_EXISTS_MSG);
         }
