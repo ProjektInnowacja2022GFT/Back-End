@@ -6,18 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class Reservation {
+public class User {
     private long id;
-    private Desk desk;
-    private UserModel user;
-    private LocalDate reservaretionsDateStart;
-    private LocalDate reservationsDateEnd;
+    private String name;
+    private String surname;
+    private String company;
+    private String email;
+    private String password;
+    private String role;
+    private String status;
 }
