@@ -31,19 +31,19 @@ public class DesksService {
                 Desks.builder().
                         id(0L).
                         sector("A").
-                        desk_number(11).
+                        deskNumber(11).
                         floor(1).
                         build(),
                 Desks.builder().
                         id(1L).
                         sector("A").
-                        desk_number(21).
+                        deskNumber(21).
                         floor(1).
                         build(),
                 Desks.builder().
                         id(2L).
                         sector("C").
-                        desk_number(37).
+                        deskNumber(37).
                         floor(2).
                         build()
                 ));

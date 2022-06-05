@@ -14,7 +14,6 @@ public class DeskService {
     public List<Desk> getAllDesks() {
         return desks;
     }
-
     public Desk getDesksById(int id) {
         if (id > desks.size()) {
             return null;
