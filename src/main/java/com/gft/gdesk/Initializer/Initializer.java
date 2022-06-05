@@ -9,6 +9,7 @@ import com.gft.gdesk.repository.UserModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,21 +46,21 @@ public class Initializer implements CommandLineRunner {
                         id(0L).
                         user(users.get(0)).
                         desk(desks.get(0)).
-                        reservaretionsDateStart(LocalDate.now()).
+                        reservationsDateStart(LocalDate.now()).
                         reservationsDateEnd(LocalDate.now().plusDays(3)).
                         build(),
                 Reservation.builder().
                         id(1L).
                         user(users.get(1)).
                         desk(desks.get(1)).
-                        reservaretionsDateStart(LocalDate.now()).
+                        reservationsDateStart(LocalDate.now()).
                         reservationsDateEnd(LocalDate.now().plusDays(4)).
                         build(),
                 Reservation.builder().
                         id(2L).
                         user(users.get(2)).
                         desk(desks.get(2)).
-                        reservaretionsDateStart(LocalDate.now().plusDays(1)).
+                        reservationsDateStart(LocalDate.now().plusDays(1)).
                         reservationsDateEnd(LocalDate.now().plusDays(2)).
                         build()
         ));

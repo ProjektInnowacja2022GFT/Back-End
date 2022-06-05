@@ -13,7 +13,7 @@ import java.util.List;
 public class DeskController {
     private DeskService deskService;
 
-    public DeskController(DeskService deskService){
+    public DeskController(DeskService deskService) {
         this.deskService = deskService;
     }
 

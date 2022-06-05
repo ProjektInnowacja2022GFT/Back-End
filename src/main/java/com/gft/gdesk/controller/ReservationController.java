@@ -19,14 +19,14 @@ public class ReservationController {
         this.reservationsService = reservationsService;
     }
 
-    @GetMapping("/reservations")
-    public List<Reservation> getReservations() {
-        return reservationsService.getAllReservations();
-    }
-
-    @GetMapping("/free-desks")
-    public List<Desk> getFreeDesks() {
-        return reservationsService.getFreeDesks();
-    }
+//    @GetMapping("/reservations")
+//    public List<Reservation> getReservations() {
+//        return reservationsService.getAllReservations();
+//    }
+//
+//    @GetMapping("/free-desks")
+//    public List<Desk> getFreeDesks() {
+//        return reservationsService.getFreeDesks();
+//    }
 
 }

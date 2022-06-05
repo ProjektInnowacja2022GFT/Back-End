@@ -18,31 +18,32 @@ import java.util.List;
 
 public class UserModelController {
 
-    private final UserModelService userService;
-    private final UserModelLoginService userLoginService;
+    private final UserModelService userModelService;
+    private final UserModelLoginService userModelLoginService;
 
     public UserModelController(UserModelService userService, UserModelLoginService userLoginService) {
 
-        this.userService = userService;
-        this.userLoginService = userLoginService;
+        this.userModelService = userService;
+        this.userModelLoginService = userLoginService;
     }
 
     @PostMapping("/register")
     public String registerUser(@RequestBody UserModel toRegister) {
-        return userService.registerUser(toRegister);
+        return userModelService.registerUser(toRegister);
     }
 
     @GetMapping("/all-users")
     public List<UserModel> getUsers() {
-        return userService.getAllUsers();
+        return userModelService.getAllUsers();
     }
 
     @PostMapping("/login")
     public UserModel login(@RequestBody UserModel toLogin) {
-        return userLoginService.login(toLogin);
+        return userModelLoginService.login(toLogin);
+    }
 
     @GetMapping("/wait-for-approval-users")
     public List<UserModel> getWaitForApprovalUsers() {
-        return userService.getWaitForApprovalUsers();
+        return userModelService.getWaitForApprovalUsers();
     }
 }
