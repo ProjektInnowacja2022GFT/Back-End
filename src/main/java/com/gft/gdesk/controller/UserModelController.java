@@ -40,5 +40,9 @@ public class UserModelController {
     @PostMapping("/login")
     public UserModel login(@RequestBody UserModel toLogin) {
         return userLoginService.login(toLogin);
+
+    @GetMapping("/wait-for-approval-users")
+    public List<UserModel> getWaitForApprovalUsers() {
+        return userService.getWaitForApprovalUsers();
     }
 }
