@@ -1,24 +1,24 @@
 package com.gft.gdesk.service;
 
-
 import com.gft.gdesk.dto.Desk;
-import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+import com.gft.gdesk.repository.DeskRepository;
+
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@AllArgsConstructor
 @Service
 public class DeskService {
-
-    private final List<Desk> desks = new ArrayList<>();
+    private final DeskRepository deskRepository;
 
     public List<Desk> getAllDesks() {
-        return desks;
+        return deskRepository.findAll();
     }
-    public Desk getDesksById(int id) {
-        if (id > desks.size()) {
-            return null;
-        }
-        return desks.get(id);
+
+    public List<Desk> getFreeDesks() {
+        return deskRepository.findAllFreeDesks();
     }
 
 }
