@@ -2,8 +2,10 @@ package com.gft.gdesk.service;
 
 
 import com.gft.gdesk.dto.UserModel;
+import com.gft.gdesk.repository.UserModelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
@@ -15,11 +17,13 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @Service
 public class UserModelService {
+    private final PasswordEncoder passwordEncoder;
     private final List<UserModel> users = new ArrayList<>();
     private static final String WAIT_FOR_APPROVAL = "WAIT_FOR_APPROVAL";
+    private final UserModelRepository userModelRepository;
 
     public List<UserModel> getAllUsers() {
-        return users;
+        return userModelRepository.findAll();
     }
 
     public UserModel getUsersById(int id) {
@@ -46,6 +50,7 @@ public class UserModelService {
             UserModel userFromDb = userCheck.get();
             return WAIT_FOR_APPROVAL.equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
         }
+        toRegister.setPassword(passwordEncoder.encode(toRegister.getPassword()));
         validateFields(toRegister);
         users.add(toRegister);
         return "User successfully registered, now wait for approval";
