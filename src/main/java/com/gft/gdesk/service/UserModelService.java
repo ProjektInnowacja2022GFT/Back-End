@@ -72,6 +72,7 @@ public class UserModelService {
         UserModel userByEmail = getUserByEmail(email);
         userModelRepository.delete(userByEmail);
     }
+
     private UserModel getUserByEmail(String email) {
         Optional<UserModel> user = userModelRepository.findUserModelByEmail(email);
         if (user.isEmpty()) {
