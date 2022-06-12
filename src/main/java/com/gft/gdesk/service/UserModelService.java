@@ -50,7 +50,8 @@ public class UserModelService {
             UserModel userFromDb = userCheck.get();
             return WAIT_FOR_APPROVAL.equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
         }
-        toRegister.setPassword(passwordEncoder.encode(toRegister.getPassword()));
+        String encodedPassword = passwordEncoder.encode(toRegister.getPassword());
+        toRegister.setPassword(encodedPassword);
         validateFields(toRegister);
         users.add(toRegister);
         return "User successfully registered, now wait for approval";
