@@ -23,7 +23,6 @@ public class UserModelService {
     private final List<UserModel> users = new ArrayList<>();
     private final UserModelRepository userModelRepository;
     private static final String WAIT_FOR_APPROVAL = "WAIT_FOR_APPROVAL";
-    private final UserModelRepository userModelRepository;
 
     public List<UserModel> getAllUsers() {
         return userModelRepository.findAll();
