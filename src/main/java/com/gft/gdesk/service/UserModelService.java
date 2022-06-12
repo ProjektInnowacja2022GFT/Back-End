@@ -19,9 +19,9 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @Service
 public class UserModelService {
-    private final PasswordEncoder passwordEncoder;
-    private final List<UserModel> users = new ArrayList<>();
+
     private final UserModelRepository userModelRepository;
+    private final PasswordEncoder passwordEncoder;
     private static final String WAIT_FOR_APPROVAL = "WAIT_FOR_APPROVAL";
 
     public List<UserModel> getAllUsers() {
@@ -36,18 +36,14 @@ public class UserModelService {
         return user.get();
     }
 
-    public List<UserModel> getWaitForApprovalUsers() {
-        List<UserModel> waitForApprovalUsers = new ArrayList<>();
-        for (UserModel user : users) {
-            if (WAIT_FOR_APPROVAL.equals(user.getStatus())) {
-                waitForApprovalUsers.add(user);
-            }
-        }
-        return waitForApprovalUsers;
+     public List<UserModel> getWaitForApprovalUsers() {
+        return userModelRepository.findAllByStatus(WAIT_FOR_APPROVAL);
     }
 
-    public String registerUser(UserModel toRegister) {
-        Optional<UserModel> userCheck = users.stream().filter(x -> x.getEmail().equals(toRegister.getEmail())).findAny();
+      public String registerUser(UserModel toRegister) {
+        Optional<UserModel> userCheck = userModelRepository.findAll().stream()
+                .filter(x -> x.getEmail().equals(toRegister.getEmail())).findAny();
+
         if (userCheck.isPresent()) {
             UserModel userFromDb = userCheck.get();
             return WAIT_FOR_APPROVAL.equals(userFromDb.getStatus()) ? "User is waiting for approval" : "User with with this email already exists";
@@ -55,7 +51,7 @@ public class UserModelService {
         String encodedPassword = passwordEncoder.encode(toRegister.getPassword());
         toRegister.setPassword(encodedPassword);
         validateFields(toRegister);
-        users.add(toRegister);
+        userModelRepository.save(toRegister);
         return "User successfully registered, now wait for approval";
     }
 
@@ -70,5 +66,4 @@ public class UserModelService {
     public void deleteUserById(long id) {
         userModelRepository.deleteById(id);
     }
-
 }
