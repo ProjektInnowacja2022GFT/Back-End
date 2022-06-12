@@ -9,6 +9,7 @@ import com.gft.gdesk.repository.UserModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Initializer implements CommandLineRunner {
     private final DeskRepository deskRepository;
     private final ReservationRepository reservationRepository;
     private final UserModelRepository userModelRepository;
+    private final PasswordEncoder passwordEncoder;
 
     private final List<Desk> desks = new ArrayList<>();
     private final List<Reservation> reservations = new ArrayList<>();
@@ -30,7 +32,7 @@ public class Initializer implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         addUserModels();
         addDesks();
         addReservations();
@@ -74,7 +76,7 @@ public class Initializer implements CommandLineRunner {
                         surname("Kowalski").
                         company("GFT").
                         email("jan.kowalski@gmail.com").
-                        password("haslo123").
+                        password(passwordEncoder.encode("haslo123")).
                         status("APPROVED").
                         build(),
                 UserModel.builder().
@@ -83,7 +85,7 @@ public class Initializer implements CommandLineRunner {
                         surname("Jaworski").
                         company("Konkurencja").
                         email("jan.kowalski@gmail.com").
-                        password("xd2137").
+                        password(passwordEncoder.encode("xd2137")).
                         status("APPROVED").
                         build(),
                 UserModel.builder().
@@ -92,7 +94,7 @@ public class Initializer implements CommandLineRunner {
                         surname("Enjoyer").
                         company("GFT").
                         email("canadian.enjoyer@gmail.com").
-                        password("1337canada").
+                        password(passwordEncoder.encode("1337canada")).
                         status("BLOCKED").
                         build()
         ));

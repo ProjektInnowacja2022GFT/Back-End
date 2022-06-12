@@ -5,6 +5,7 @@ import com.gft.gdesk.exception.loginExceptions.UserNotFoundException;
 import com.gft.gdesk.repository.UserModelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,7 +20,7 @@ public class UserModelLoginService {
     private static final String USER_STATUS_PENDING = "WAITING_FOR_APPROVAL";
     private static final String USER_STATUS_BLOCKED = "BLOCKED";
     private final UserModelRepository userModelRepository;
-
+    private final PasswordEncoder passwordEncoder;
 
     public UserModel login(UserModel toLogin) {
         try {
@@ -50,7 +51,7 @@ public class UserModelLoginService {
     }
 
     private void validatePassword(UserModel user, String password) throws UserNotFoundException {
-        if (!password.equals(user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new UserNotFoundException(USER_NOT_EXISTS_MSG);
         }
     }
