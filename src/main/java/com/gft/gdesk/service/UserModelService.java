@@ -25,13 +25,7 @@ public class UserModelService {
     }
 
     public List<UserModel> getWaitForApprovalUsers() {
-        List<UserModel> waitForApprovalUsers = new ArrayList<>();
-        for (UserModel user : userModelRepository.findAll()) {
-            if (WAIT_FOR_APPROVAL.equals(user.getStatus())) {
-                waitForApprovalUsers.add(user);
-            }
-        }
-        return waitForApprovalUsers;
+        return userModelRepository.findAllByStatus(WAIT_FOR_APPROVAL);
     }
 
     public String registerUser(UserModel toRegister) {
