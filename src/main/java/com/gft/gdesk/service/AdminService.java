@@ -22,7 +22,7 @@ public class AdminService {
     }
 
     public void acceptNewUser(Long Id) {
-        Optional<UserModel> user = Optional.ofNullable(userModelRepository.findAllById(Id));
+        Optional<UserModel> user = userModelRepository.findById(Id);
 
         if (!user.isPresent()) {
             throw new UserNotFoundException("UserModel does not exist");
