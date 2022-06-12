@@ -69,20 +69,7 @@ public class UserModelService {
     }
 
     public void deleteUserById(long id) {
-        UserModel user = getUserById(id);
-        userModelRepository.delete(user);
+        userModelRepository.deleteById(id);
     }
 
-    public void deleteUserByEmail(String email) {
-        UserModel userByEmail = getUserByEmail(email);
-        userModelRepository.delete(userByEmail);
-    }
-
-    private UserModel getUserByEmail(String email) {
-        Optional<UserModel> user = userModelRepository.findUserModelByEmail(email);
-        if (user.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return user.get();
-    }
 }

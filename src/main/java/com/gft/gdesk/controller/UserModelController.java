@@ -58,8 +58,4 @@ public class UserModelController {
         userModelService.deleteUserById(id);
     }
 
-    @DeleteMapping("/delete-by-email")
-    public void deleteUserByEmail(@RequestBody String email) {
-        userModelService.deleteUserByEmail(email);
-    }
 }
