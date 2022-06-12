@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 public class UserModelService {
 
     private final UserModelRepository userModelRepository;
+    private final PasswordEncoder passwordEncoder;
     private static final String WAIT_FOR_APPROVAL = "WAIT_FOR_APPROVAL";
 
     public List<UserModel> getAllUsers() {
