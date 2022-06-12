@@ -4,6 +4,7 @@ package com.gft.gdesk.controller;
 import com.gft.gdesk.dto.UserModel;
 import com.gft.gdesk.service.UserModelLoginService;
 import com.gft.gdesk.service.UserModelService;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,11 @@ public class UserModelController {
         return userModelService.getAllUsers();
     }
 
+    @GetMapping("/user-by-id")
+    public UserModel getUserById(@RequestBody Long id) {
+        return userModelService.getUserById(id);
+    }
+
     @PostMapping("/login")
     public UserModel login(@RequestBody UserModel toLogin) {
         return userModelLoginService.login(toLogin);
@@ -46,4 +52,10 @@ public class UserModelController {
     public List<UserModel> getWaitForApprovalUsers() {
         return userModelService.getWaitForApprovalUsers();
     }
+
+    @DeleteMapping("/delete-by-id")
+    public void deleteUserById(@RequestBody Long id) {
+        userModelService.deleteUserById(id);
+    }
+
 }
