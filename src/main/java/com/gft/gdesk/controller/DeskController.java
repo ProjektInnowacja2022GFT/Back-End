@@ -17,9 +17,13 @@ public class DeskController {
         this.deskService = deskService;
     }
 
-
     @GetMapping("/desks")
     public List<Desk> getDesks() {
         return deskService.getAllDesks();
+    }
+
+    @GetMapping("/free-desks")
+    public List<Desk> getFreeDesks() {
+        return deskService.getFreeDesks();
     }
 }
