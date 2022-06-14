@@ -1,6 +1,6 @@
 package com.gft.gdesk.controller;
 
-import com.gft.gdesk.dto.Desk;
+import com.gft.gdesk.entity.Desk;
 import com.gft.gdesk.service.DeskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

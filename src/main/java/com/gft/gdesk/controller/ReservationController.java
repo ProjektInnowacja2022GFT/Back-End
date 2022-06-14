@@ -1,6 +1,6 @@
 package com.gft.gdesk.controller;
 
-import com.gft.gdesk.dto.Reservation;
+import com.gft.gdesk.entity.Reservation;
 import com.gft.gdesk.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

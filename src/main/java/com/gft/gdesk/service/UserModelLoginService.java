@@ -1,8 +1,10 @@
 package com.gft.gdesk.service;
 
-import com.gft.gdesk.dto.UserModel;
-import com.gft.gdesk.exception.loginExceptions.UserNotFoundException;
+import com.gft.gdesk.entity.UserModel;
+import com.gft.gdesk.exception.UserNotFoundException;
 import com.gft.gdesk.repository.UserModelRepository;
+import com.gft.gdesk.util.ExceptionMessages;
+import com.gft.gdesk.util.UserModelStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,11 +16,7 @@ import javax.naming.AuthenticationException;
 @Service
 @AllArgsConstructor
 public class UserModelLoginService {
-    private static final String USER_NOT_EXISTS_MSG = "Incorrect email or password";
-    private static final String USER_PENDING_MSG = "Your account is still pending approval";
-    private static final String USER_BLOCKED_MSG = "Your account has been rejected";
-    private static final String USER_STATUS_PENDING = "WAITING_FOR_APPROVAL";
-    private static final String USER_STATUS_BLOCKED = "BLOCKED";
+
     private final UserModelRepository userModelRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -37,22 +35,20 @@ public class UserModelLoginService {
 
     private void authenticateUser(UserModel user) throws AuthenticationException {
         switch (user.getStatus()) {
-            case USER_STATUS_PENDING:
-                throw new AuthenticationException(USER_PENDING_MSG);
-            case USER_STATUS_BLOCKED:
-                throw new AuthenticationException(USER_BLOCKED_MSG);
+            case UserModelStatus.WAITING_FOR_APPROVAL:
+                throw new AuthenticationException(ExceptionMessages.ACCOUNT_PENDING_FOR_APPROVAL);
+            case UserModelStatus.BLOCKED:
+                throw new AuthenticationException(ExceptionMessages.ACCOUNT_BLOCKED);
         }
     }
 
     private UserModel loadUserByEmail(String email) throws UserNotFoundException {
-        return userModelRepository
-                .findUserModelByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(USER_NOT_EXISTS_MSG));
+        return userModelRepository.findUserModelByEmail(email).orElseThrow(() -> new UserNotFoundException(ExceptionMessages.INCORRECT_EMAIL));
     }
 
     private void validatePassword(UserModel user, String password) throws UserNotFoundException {
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new UserNotFoundException(USER_NOT_EXISTS_MSG);
+            throw new UserNotFoundException(ExceptionMessages.INCORRECT_EMAIL_OR_PWD);
         }
     }
 }

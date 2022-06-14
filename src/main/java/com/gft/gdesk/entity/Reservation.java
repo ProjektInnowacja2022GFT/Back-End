@@ -1,4 +1,4 @@
-package com.gft.gdesk.dto;
+package com.gft.gdesk.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,13 +14,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 @Entity
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private LocalDate reservationsDateStart;
+    private LocalDate reservationsDateEnd;
 
     @ManyToOne()
     private UserModel user;
@@ -28,6 +29,4 @@ public class Reservation {
     @ManyToOne()
     private Desk desk;
 
-    private LocalDate reservationsDateStart;
-    private LocalDate reservationsDateEnd;
 }
