@@ -7,8 +7,6 @@ import com.gft.gdesk.exception.UserStatusAlreadyChangedException;
 import com.gft.gdesk.repository.UserModelRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class AdminService {
     private final UserModelRepository userModelRepository;
@@ -21,23 +19,19 @@ public class AdminService {
         this.userModelRepository = userModelRepository;
     }
 
-    public void acceptNewUser(Long Id) {
-        Optional<UserModel> user = userModelRepository.findById(Id);
+    public void acceptNewUser(Long Id) throws UserStatusAlreadyChangedException {
+        UserModel user = userModelRepository.findById(Id).orElseThrow(() -> new UserNotFoundException("UserModel does not exist"));
 
-        if (!user.isPresent()) {
-            throw new UserNotFoundException("UserModel does not exist");
+        if (user.getStatus().equals(WAITING_FOR_APPROVAL)) {
+            user.setStatus(APPROVED);
+            userModelRepository.save(user);
+        } else {
+            throw new UserStatusAlreadyChangedException(user.getStatus());
         }
-
-        UserModel userToUpdate = user.get();
-        if (userToUpdate.getStatus().equals(WAITING_FOR_APPROVAL)) {
-            userToUpdate.setStatus(APPROVED);
-        }
-        userModelRepository.save(userToUpdate);
     }
 
     public void blockNewUser(long id) throws UserNotFoundException, UserStatusAlreadyChangedException {
-        UserModel user = userModelRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("UserModel does not exist id: " + id));
+        UserModel user = userModelRepository.findById(id).orElseThrow(() -> new UserNotFoundException("UserModel does not exist id: " + id));
         if (!(WAITING_FOR_APPROVAL.equals(user.getStatus()))) {
             throw new UserStatusAlreadyChangedException(user.getStatus());
         }

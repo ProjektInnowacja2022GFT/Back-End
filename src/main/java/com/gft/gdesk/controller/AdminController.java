@@ -19,9 +19,21 @@ public class AdminController {
     private final AdminService adminService;
 
     @PutMapping("/block-user/{id}")
-    public void blockUserById(@PathVariable int id) {
+    public void blockUserById(@PathVariable Long id) {
         try {
             adminService.blockNewUser(id);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (UserStatusAlreadyChangedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        throw new ResponseStatusException(HttpStatus.OK);
+    }
+
+    @PutMapping("/approve-user/{id}")
+    public void acceptUserById(@PathVariable Long id) {
+        try {
+            adminService.acceptNewUser(id);
         } catch (UserNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } catch (UserStatusAlreadyChangedException e) {
