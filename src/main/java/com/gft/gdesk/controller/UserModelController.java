@@ -6,6 +6,7 @@ import com.gft.gdesk.service.UserModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,8 @@ public class UserModelController {
         return userModelService.getAllUsers();
     }
 
-    @GetMapping("/user-by-id")
-    public UserModel getUserById(@RequestBody Long id) {
+    @GetMapping("/user-by-id/{id}")
+    public UserModel getUserById(@PathVariable Long id) {
         return userModelService.getUserById(id);
     }
 
@@ -46,8 +47,8 @@ public class UserModelController {
         return userModelService.getWaitForApprovalUsers();
     }
 
-    @DeleteMapping("/delete-by-id")
-    public void deleteUserById(@RequestBody Long id) {
+    @DeleteMapping("/user-by-id/{id}")
+    public void deleteUserById(@PathVariable Long id) {
         userModelService.deleteUserById(id);
     }
 
