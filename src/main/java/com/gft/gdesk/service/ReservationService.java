@@ -6,9 +6,7 @@ import com.gft.gdesk.entity.UserModel;
 import com.gft.gdesk.exception.DeskAlreadyOccupiedException;
 import com.gft.gdesk.exception.DeskNotFoundException;
 import com.gft.gdesk.exception.UserNotFoundException;
-import com.gft.gdesk.repository.DeskRepository;
 import com.gft.gdesk.repository.ReservationRepository;
-import com.gft.gdesk.repository.UserModelRepository;
 import com.gft.gdesk.util.ExceptionMessages;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,21 +20,26 @@ import java.util.List;
 @Service
 public class ReservationService {
 
+    private static final String SUCCESSFULLY_ADDED = "Reservation successfully added";
+
     private final ReservationRepository reservationRepository;
-    private final DeskRepository deskRepository;
-    private final UserModelRepository userModelRepository;
+    private final UserModelService userModelService;
+    private final DeskService deskService;
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
-    public Reservation addReservation(Reservation toReservation) {
+    public String addReservation(Reservation toReservation) {
         try {
-            loadUserByEmail(toReservation.getUser().getEmail());
-            loadDeskById(toReservation.getDesk().getId());
-            checkIfDeskIsFreeOnThisTime(toReservation.getDesk(), toReservation.getReservationsDateStart(), toReservation.getReservationsDateEnd());
+            UserModel userModel = userModelService.getUserById(toReservation.getUser().getId());
+            Desk desk = deskService.getDeskById(toReservation.getDesk().getId());
 
-            return reservationRepository.save(toReservation);
+            toReservation.setUser(userModel);
+            toReservation.setDesk(desk);
+            checkIfReservationHasCorrectDesk(toReservation.getDesk(), toReservation.getReservationsDateStart(), toReservation.getReservationsDateEnd());
+            reservationRepository.save(toReservation);
+            return SUCCESSFULLY_ADDED;
 
         } catch (UserNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
@@ -45,21 +48,13 @@ public class ReservationService {
         }
     }
 
-    private UserModel loadUserByEmail(String email) throws UserNotFoundException {
-        return userModelRepository.findUserModelByEmail(email).orElseThrow(() -> new UserNotFoundException(ExceptionMessages.INCORRECT_EMAIL));
-    }
-
-    private Desk loadDeskById(Long id) throws DeskNotFoundException {
-        return deskRepository.findById(id).orElseThrow(() -> new DeskNotFoundException(ExceptionMessages.INCORRECT_DESK));
-    }
-
-    private void checkIfDeskIsFreeOnThisTime(Desk desk, LocalDate start, LocalDate end) {
-        if (isDeskOccupied(desk, start, end)) {
+    private void checkIfReservationHasCorrectDesk(Desk desk, LocalDate start, LocalDate end) {
+        if (isDeskInExistingReservation(desk, start, end)) {
             throw new DeskAlreadyOccupiedException(ExceptionMessages.DESK_ALREADY_OCCUPIED);
         }
     }
 
-    private boolean isDeskOccupied(Desk desk, LocalDate start, LocalDate end) {
+    private boolean isDeskInExistingReservation(Desk desk, LocalDate start, LocalDate end) {
         return !reservationRepository.findAllByOccupyDeskStatus(desk.getId(), start, end).isEmpty();
     }
 }
