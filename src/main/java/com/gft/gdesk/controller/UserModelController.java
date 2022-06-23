@@ -35,7 +35,7 @@ public class UserModelController {
         return userModelService.getAllUsers();
     }
 
-    @GetMapping("/user-by-id/{id}")
+    @GetMapping("/users/{id}")
     public UserModel getUserById(@PathVariable Long id) {
         try {
             return userModelService.getUserById(id);
@@ -54,7 +54,7 @@ public class UserModelController {
         return userModelService.getWaitForApprovalUsers();
     }
 
-    @DeleteMapping("/user-by-id/{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable Long id) {
         userModelService.deleteUserById(id);
     }

@@ -29,12 +29,12 @@ public class UserModel {
     private String company;
     private String email;
     private String status = UserModelStatus.WAITING_FOR_APPROVAL;
-    private static final String ROLE = UserModelRole.USER;
+    private String ROLE = UserModelRole.USER;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Reservation> reservationList;
+    private List<Reservation> reservations;
 }
