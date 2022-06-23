@@ -4,11 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gft.gdesk.util.UserModelRole;
 import com.gft.gdesk.util.UserModelStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,8 +24,10 @@ public class UserModel {
     private String name;
     private String surname;
     private String company;
+    @Column(unique = true)
     private String email;
     private String status = UserModelStatus.WAITING_FOR_APPROVAL;
+    @Value(UserModelRole.USER)
     private String ROLE = UserModelRole.USER;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

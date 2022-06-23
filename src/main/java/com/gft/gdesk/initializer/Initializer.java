@@ -6,11 +6,13 @@ import com.gft.gdesk.entity.UserModel;
 import com.gft.gdesk.repository.DeskRepository;
 import com.gft.gdesk.repository.ReservationRepository;
 import com.gft.gdesk.repository.UserModelRepository;
+import com.gft.gdesk.util.UserModelRole;
 import com.gft.gdesk.util.UserModelStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.List;
 
 
 @RequiredArgsConstructor
-@SpringBootApplication
+@Component
 public class Initializer implements CommandLineRunner {
 
     private final DeskRepository deskRepository;
@@ -79,6 +81,7 @@ public class Initializer implements CommandLineRunner {
                         email("jan.kowalski@gmail.com").
                         password(passwordEncoder.encode("haslo123")).
                         status(UserModelStatus.APPROVED).
+                        ROLE(UserModelRole.USER).
                         build(),
                 UserModel.builder().
                         id(1L).
@@ -88,6 +91,7 @@ public class Initializer implements CommandLineRunner {
                         email("jan.kowalski1@gmail.com").
                         password(passwordEncoder.encode("xd2137")).
                         status(UserModelStatus.WAITING_FOR_APPROVAL).
+                        ROLE(UserModelRole.USER).
                         build(),
                 UserModel.builder().
                         id(2L).
@@ -97,6 +101,7 @@ public class Initializer implements CommandLineRunner {
                         email("canadian.enjoyer@gmail.com").
                         password(passwordEncoder.encode("1337canada")).
                         status(UserModelStatus.BLOCKED).
+                        ROLE(UserModelRole.USER).
                         build()
         ));
     }

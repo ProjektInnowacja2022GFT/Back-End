@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -25,6 +28,16 @@ public class MyUserDetails implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.status = status;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return authorities;
+    }
+
+    @Override
+    public String getPassword(){
+        return password;
     }
 
     @Override
