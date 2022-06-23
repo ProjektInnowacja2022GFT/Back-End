@@ -1,11 +1,12 @@
-package com.gft.gdesk.Initializer;
+package com.gft.gdesk.initializer;
 
-import com.gft.gdesk.dto.Desk;
-import com.gft.gdesk.dto.Reservation;
-import com.gft.gdesk.dto.UserModel;
+import com.gft.gdesk.entity.Desk;
+import com.gft.gdesk.entity.Reservation;
+import com.gft.gdesk.entity.UserModel;
 import com.gft.gdesk.repository.DeskRepository;
 import com.gft.gdesk.repository.ReservationRepository;
 import com.gft.gdesk.repository.UserModelRepository;
+import com.gft.gdesk.util.UserModelStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -77,7 +78,7 @@ public class Initializer implements CommandLineRunner {
                         company("GFT").
                         email("jan.kowalski@gmail.com").
                         password(passwordEncoder.encode("haslo123")).
-                        status("APPROVED").
+                        status(UserModelStatus.APPROVED).
                         build(),
                 UserModel.builder().
                         id(1L).
@@ -86,7 +87,7 @@ public class Initializer implements CommandLineRunner {
                         company("Konkurencja").
                         email("jan.kowalski@gmail.com").
                         password(passwordEncoder.encode("xd2137")).
-                        status("APPROVED").
+                        status(UserModelStatus.WAITING_FOR_APPROVAL).
                         build(),
                 UserModel.builder().
                         id(2L).
@@ -95,7 +96,7 @@ public class Initializer implements CommandLineRunner {
                         company("GFT").
                         email("canadian.enjoyer@gmail.com").
                         password(passwordEncoder.encode("1337canada")).
-                        status("BLOCKED").
+                        status(UserModelStatus.BLOCKED).
                         build()
         ));
     }

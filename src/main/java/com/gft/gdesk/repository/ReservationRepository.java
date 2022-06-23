@@ -1,7 +1,6 @@
 package com.gft.gdesk.repository;
 
-import com.gft.gdesk.dto.Desk;
-import com.gft.gdesk.dto.Reservation;
+import com.gft.gdesk.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,10 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+
     @Query(
             "SELECT r " +
-            "FROM Reservation r " +
-            "WHERE " +
+                    "FROM Reservation r " +
+                    "WHERE " +
                     "r.desk.id=:deskId AND " +
                     "((reservationsDateStart BETWEEN :start AND :end) OR " +
                     "(reservationsDateEnd BETWEEN :start AND :end) OR " +
