@@ -85,7 +85,7 @@ public class Initializer implements CommandLineRunner {
                         name("Piotr").
                         surname("Jaworski").
                         company("Konkurencja").
-                        email("jan.kowalski@gmail.com").
+                        email("jan.kowalski1@gmail.com").
                         password(passwordEncoder.encode("xd2137")).
                         status(UserModelStatus.WAITING_FOR_APPROVAL).
                         build(),
