@@ -42,9 +42,7 @@ import java.util.Map;
 public class UserModelController {
 
     private final UserModelService userModelService;
-    private final UserModelLoginService userModelLoginService;
     private final AuthenticationManager authenticationManager;
-    private final MyUserDetailsService myUserDetailsService;
     private final JwtUtil jwtTokenUtil;
 
     @PostMapping("/register")
@@ -69,7 +67,7 @@ public class UserModelController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest toLogin) throws Exception {
         MyUserDetails userDetails = null;
-        String jwt = "XD";
+        String jwt = "";
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(toLogin.getEmail(), toLogin.getPassword())
@@ -77,11 +75,9 @@ public class UserModelController {
             userDetails = (MyUserDetails) authentication.getPrincipal();
             jwt = jwtTokenUtil.generateToken(userDetails);
         } catch (Exception e) {
-            log.error(e.getMessage()+"\n@@@@@@@@@@@@\n@@@@@@@@@@@@");
+            log.error(e.getMessage() + "\n@@@@@@@@@@@@\n@@@@@@@@@@@@");
         }
 
-//        final MyUserDetails userDetails = myUserDetailsService
-//                .loadUserByUsername(toLogin.getEmail());
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
