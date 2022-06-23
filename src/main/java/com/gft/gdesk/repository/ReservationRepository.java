@@ -22,4 +22,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                     "(:end BETWEEN reservationsDateStart AND reservationsDateEnd)))"
     )
     List<Reservation> findAllByOccupyDeskStatus(long deskId, LocalDate start, LocalDate end);
+
+    @Query("DELETE FROM Reservation WHERE reservationsDateEnd < :current")
+    List<Reservation> deleteAllExpiredReservation(LocalDate current);
 }
