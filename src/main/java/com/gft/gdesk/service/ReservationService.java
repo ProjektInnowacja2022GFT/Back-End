@@ -34,6 +34,7 @@ public class ReservationService {
         try {
             loadUserByEmail(toReservation.getUser().getEmail());
             loadDeskById(toReservation.getDesk().getId());
+
             checkIfDeskIsFreeOnThisTime(toReservation.getDesk(), toReservation.getReservationsDateStart(), toReservation.getReservationsDateEnd());
 
             return reservationRepository.save(toReservation);

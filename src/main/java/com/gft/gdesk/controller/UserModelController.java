@@ -1,11 +1,27 @@
 package com.gft.gdesk.controller;
 
+import com.gft.gdesk.dto.AuthenticationRequest;
+import com.gft.gdesk.dto.AuthenticationResponse;
 import com.gft.gdesk.entity.UserModel;
 import com.gft.gdesk.exception.UserNotFoundException;
+import com.gft.gdesk.security.MyUserDetails;
+import com.gft.gdesk.service.MyUserDetailsService;
 import com.gft.gdesk.service.UserModelLoginService;
 import com.gft.gdesk.service.UserModelService;
+import com.gft.gdesk.util.JwtUtil;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/v1/user")
 @RestController
@@ -24,6 +41,9 @@ public class UserModelController {
 
     private final UserModelService userModelService;
     private final UserModelLoginService userModelLoginService;
+    private final AuthenticationManager authenticationManager;
+    private final MyUserDetailsService myUserDetailsService;
+    private final JwtUtil jwtTokenUtil;
 
     @PostMapping("/register")
     public String registerUser(@RequestBody UserModel toRegister) {
@@ -45,8 +65,19 @@ public class UserModelController {
     }
 
     @PostMapping("/login")
-    public UserModel login(@RequestBody UserModel toLogin) {
-        return userModelLoginService.login(toLogin);
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest toLogin) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(toLogin.getEmail(), toLogin.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or password", e);
+        }
+
+        final MyUserDetails userDetails = myUserDetailsService
+                .loadUserByUsername(toLogin.getEmail());
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
     @GetMapping("/wait-for-approval-users")
