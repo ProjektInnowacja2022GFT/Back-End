@@ -1,6 +1,5 @@
 package com.gft.gdesk.service;
 
-
 import com.gft.gdesk.entity.UserModel;
 import com.gft.gdesk.exception.UserNotFoundException;
 import com.gft.gdesk.repository.UserModelRepository;

@@ -6,11 +6,13 @@ import com.gft.gdesk.entity.UserModel;
 import com.gft.gdesk.repository.DeskRepository;
 import com.gft.gdesk.repository.ReservationRepository;
 import com.gft.gdesk.repository.UserModelRepository;
+import com.gft.gdesk.util.UserModelRole;
 import com.gft.gdesk.util.UserModelStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.List;
 
 
 @RequiredArgsConstructor
-@SpringBootApplication
+@Component
 public class Initializer implements CommandLineRunner {
 
     private final DeskRepository deskRepository;
@@ -79,15 +81,17 @@ public class Initializer implements CommandLineRunner {
                         email("jan.kowalski@gmail.com").
                         password(passwordEncoder.encode("haslo123")).
                         status(UserModelStatus.APPROVED).
+                        role(UserModelRole.USER).
                         build(),
                 UserModel.builder().
                         id(1L).
                         name("Piotr").
                         surname("Jaworski").
                         company("Konkurencja").
-                        email("jan.kowalski@gmail.com").
+                        email("jan.kowalski1@gmail.com").
                         password(passwordEncoder.encode("xd2137")).
                         status(UserModelStatus.WAITING_FOR_APPROVAL).
+                        role(UserModelRole.USER).
                         build(),
                 UserModel.builder().
                         id(2L).
@@ -97,6 +101,7 @@ public class Initializer implements CommandLineRunner {
                         email("canadian.enjoyer@gmail.com").
                         password(passwordEncoder.encode("1337canada")).
                         status(UserModelStatus.BLOCKED).
+                        role(UserModelRole.USER).
                         build()
         ));
     }
@@ -120,6 +125,12 @@ public class Initializer implements CommandLineRunner {
                         sector("C").
                         deskNumber(37).
                         floor(2).
+                        build(),
+                Desk.builder().
+                        id(4L).
+                        sector("B").
+                        deskNumber(46).
+                        floor(5).
                         build()
         ));
     }
