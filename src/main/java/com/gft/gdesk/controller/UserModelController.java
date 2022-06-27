@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/user")
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserModelController {
 
     private final UserModelService userModelService;
@@ -65,8 +67,8 @@ public class UserModelController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequest toLogin) throws Exception {
-        return ResponseEntity.ok(new AuthenticationResponse(userModelLoginService.login(toLogin)));
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest toLogin) throws Exception {
+        return ResponseEntity.ok(userModelLoginService.login(toLogin));
     }
 
     @GetMapping("/wait-for-approval-users")

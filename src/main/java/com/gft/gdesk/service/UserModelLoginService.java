@@ -29,10 +29,11 @@ public class UserModelLoginService {
 
     private final UserModelRepository userModelRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserModelService userModelService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtTokenUtil;
 
-    public String login(AuthenticationRequest toLogin) {
+    public AuthenticationResponse login(AuthenticationRequest toLogin) {
         MyUserDetails userDetails = null;
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -42,7 +43,7 @@ public class UserModelLoginService {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        return jwtTokenUtil.generateToken(userDetails);
+        return new AuthenticationResponse(jwtTokenUtil.generateToken(userDetails), userModelService.getUserById(userDetails.getId()));
     }
 
     private void authenticateUser(UserModel user) throws AuthenticationException {
