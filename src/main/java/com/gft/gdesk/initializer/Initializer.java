@@ -81,7 +81,7 @@ public class Initializer implements CommandLineRunner {
                         email("jan.kowalski@gmail.com").
                         password(passwordEncoder.encode("haslo123")).
                         status(UserModelStatus.APPROVED).
-                        ROLE(UserModelRole.USER).
+                        role(UserModelRole.USER).
                         build(),
                 UserModel.builder().
                         id(1L).
@@ -91,7 +91,7 @@ public class Initializer implements CommandLineRunner {
                         email("jan.kowalski1@gmail.com").
                         password(passwordEncoder.encode("xd2137")).
                         status(UserModelStatus.WAITING_FOR_APPROVAL).
-                        ROLE(UserModelRole.USER).
+                        role(UserModelRole.USER).
                         build(),
                 UserModel.builder().
                         id(2L).
@@ -101,7 +101,7 @@ public class Initializer implements CommandLineRunner {
                         email("canadian.enjoyer@gmail.com").
                         password(passwordEncoder.encode("1337canada")).
                         status(UserModelStatus.BLOCKED).
-                        ROLE(UserModelRole.USER).
+                        role(UserModelRole.USER).
                         build()
         ));
     }
@@ -125,6 +125,12 @@ public class Initializer implements CommandLineRunner {
                         sector("C").
                         deskNumber(37).
                         floor(2).
+                        build(),
+                Desk.builder().
+                        id(4L).
+                        sector("B").
+                        deskNumber(46).
+                        floor(5).
                         build()
         ));
     }

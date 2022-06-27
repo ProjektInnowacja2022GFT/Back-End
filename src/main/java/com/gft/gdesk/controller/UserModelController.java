@@ -35,13 +35,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RequestMapping("/api/v1/user")
 @RestController
 @RequiredArgsConstructor
 public class UserModelController {
 
     private final UserModelService userModelService;
+    private final UserModelLoginService userModelLoginService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtTokenUtil;
 
@@ -66,20 +66,7 @@ public class UserModelController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest toLogin) throws Exception {
-        MyUserDetails userDetails = null;
-        String jwt = "";
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(toLogin.getEmail(), toLogin.getPassword())
-            );
-            userDetails = (MyUserDetails) authentication.getPrincipal();
-            jwt = jwtTokenUtil.generateToken(userDetails);
-        } catch (Exception e) {
-            log.error(e.getMessage() + "\n@@@@@@@@@@@@\n@@@@@@@@@@@@");
-        }
-
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(userModelLoginService.login(toLogin)));
     }
 
     @GetMapping("/wait-for-approval-users")
