@@ -48,8 +48,8 @@ public class UserModelController {
     private final JwtUtil jwtTokenUtil;
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody UserModel toRegister) {
-        return userModelService.registerUser(toRegister);
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody UserModel toRegister) {
+        return new ResponseEntity<>(Map.of("data", userModelService.registerUser(toRegister)), HttpStatus.OK);
     }
 
     @GetMapping("/all-users")
