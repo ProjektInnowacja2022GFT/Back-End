@@ -1,6 +1,7 @@
 package com.gft.gdesk.repository;
 
 import com.gft.gdesk.entity.Reservation;
+import com.gft.gdesk.entity.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +26,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("DELETE FROM Reservation WHERE reservationsDateEnd < :current")
     List<Reservation> deleteAllExpiredReservation(LocalDate current);
+
+    List<Reservation> findAllByUserId(Long user);
+
+    List<Reservation> findAllByReservationsDateStart(LocalDate date);
 }

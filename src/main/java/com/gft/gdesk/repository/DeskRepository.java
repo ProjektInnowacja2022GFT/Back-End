@@ -13,4 +13,6 @@ public interface DeskRepository extends JpaRepository<Desk, Long> {
     @Query("SELECT d FROM Desk d LEFT JOIN Reservation r ON d.id=r.desk.id WHERE r.desk.id IS NULL")
     List<Desk> findAllFreeDesks();
 
+    List<Desk> findAllByFloor(int floor);
+
 }

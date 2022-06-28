@@ -1,5 +1,6 @@
 package com.gft.gdesk.service;
 
+import com.gft.gdesk.dto.AddReservation;
 import com.gft.gdesk.entity.Desk;
 import com.gft.gdesk.entity.Reservation;
 import com.gft.gdesk.entity.UserModel;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,15 +32,20 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public String addReservation(Reservation toReservation) {
+    public String addReservation(AddReservation toReservation) {
         try {
-            UserModel userModel = userModelService.getUserById(toReservation.getUser().getId());
-            Desk desk = deskService.getDeskById(toReservation.getDesk().getId());
+            UserModel userModel = userModelService.getUserById(toReservation.getUserId());
+            Desk desk = deskService.getDeskById(toReservation.getDeskId());
 
-            toReservation.setUser(userModel);
-            toReservation.setDesk(desk);
-            checkIfReservationHasCorrectDesk(toReservation.getDesk(), toReservation.getReservationsDateStart(), toReservation.getReservationsDateEnd());
-            reservationRepository.save(toReservation);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate dateStart = LocalDate.parse(toReservation.getReservationDateStart(), formatter);
+            Reservation newReservation = new Reservation();
+            newReservation.setReservationsDateStart(dateStart);
+            newReservation.setReservationsDateEnd(dateStart.plusDays(1));
+            newReservation.setUser(userModel);
+            newReservation.setDesk(desk);
+            checkIfReservationHasCorrectDesk(newReservation.getDesk(), newReservation.getReservationsDateStart(), newReservation.getReservationsDateEnd());
+            reservationRepository.save(newReservation);
             return SUCCESSFULLY_ADDED;
 
         } catch (UserNotFoundException e) {
@@ -46,6 +53,16 @@ public class ReservationService {
         } catch (DeskNotFoundException | DeskAlreadyOccupiedException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+    }
+
+    public List<Reservation> getAllReservationsForUser(Long userId) {
+        return reservationRepository.findAllByUserId(userId);
+    }
+
+    public List<Reservation> getReservationsForDate (String pickedDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(pickedDate, formatter);
+        return reservationRepository.findAllByReservationsDateStart(date);
     }
 
     private void checkIfReservationHasCorrectDesk(Desk desk, LocalDate start, LocalDate end) {

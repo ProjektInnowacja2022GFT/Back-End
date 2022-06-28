@@ -112,13 +112,13 @@ public class Initializer implements CommandLineRunner {
                         id(0L).
                         sector("A").
                         deskNumber(11).
-                        floor(1).
+                        floor(9).
                         build(),
                 Desk.builder().
                         id(1L).
                         sector("A").
                         deskNumber(21).
-                        floor(1).
+                        floor(10).
                         build(),
                 Desk.builder().
                         id(2L).
@@ -130,7 +130,31 @@ public class Initializer implements CommandLineRunner {
                         id(4L).
                         sector("B").
                         deskNumber(46).
-                        floor(5).
+                        floor(11).
+                        build(),
+                Desk.builder().
+                        id(5L).
+                        sector("B").
+                        deskNumber(47).
+                        floor(11).
+                        build(),
+                Desk.builder().
+                        id(6L).
+                        sector("B").
+                        deskNumber(49).
+                        floor(11).
+                        build(),
+                Desk.builder().
+                        id(7L).
+                        sector("C").
+                        deskNumber(51).
+                        floor(9).
+                        build(),
+                Desk.builder().
+                        id(8L).
+                        sector("C").
+                        deskNumber(52).
+                        floor(10).
                         build()
         ));
     }
